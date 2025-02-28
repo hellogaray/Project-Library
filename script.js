@@ -8,7 +8,6 @@ const showButton = document.getElementById("showButton");
 const closeButton = document.getElementById("closeWindow")
 const submitButton = document.getElementById("submit")
 const bookForm = document.getElementById("bookForm");
-const selectBookForm = document.getElementById("status");
 
 // Book Constructor Function
 function Book(title, author, pages, readStatus) {
@@ -74,19 +73,26 @@ function clearTable() {
 
 bookForm.addEventListener("submit", (event) => {
   event.preventDefault();
-
+  // Convert status string to boolean
+  const statusValue = bookForm.status.value !== 'false';
+  
   const book = new Book(
     bookForm.title.value, 
     bookForm.author.value, 
     bookForm.pages.value, 
-    bookForm.status.options[selectBookForm.selectedIndex].text
+    statusValue
+
   );
 
-  addBookToLibrary(book);
-  clearTable()
-  renderLibrary();
-  dialog.close();
+  console.log(book);
 
+  // Add book to library and update UI
+  addBookToLibrary(book);
+  clearTable();
+  renderLibrary();
+
+  // Close the dialog
+  dialog.close();
 });
 
 // Event Listener: Show dialog when button is clicked
